@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hero-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+.feature-card {
+  @apply p-6 bg-white rounded-lg shadow-md transition-transform duration-300 hover:transform hover:-translate-y-1;
+}
+
+.stat-card {
+  @apply p-4 text-center bg-yellow-400 text-gray-900;
+}
+
+.event-card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:-translate-y-1;
+}
