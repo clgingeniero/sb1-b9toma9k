@@ -8,6 +8,7 @@ import { ManagementView } from './components/ManagementView';
 import { ViewMode } from './components/ViewMode';
 import { Chatbot } from './components/Chatbot';
 import { useAuth } from './context/AuthContext';
+import { NewsProvider } from './context/NewsContext';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { authState } = useAuth();
@@ -25,25 +26,27 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <Toaster position="top-right" />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route
-            path="/management"
-            element={
-              <PrivateRoute>
-                <ManagementView />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/view" element={<ViewMode />} />
-        </Routes>
-        <Chatbot />
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <NewsProvider>
+        <Router>
+          <Toaster position="top-right" />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route
+              path="/management"
+              element={
+                <PrivateRoute>
+                  <ManagementView />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/view" element={<ViewMode />} />
+          </Routes>
+          <Chatbot />
+        </Router>
+      </NewsProvider>
+    </AuthProvider>
   );
 }
 

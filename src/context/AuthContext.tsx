@@ -8,12 +8,14 @@ const AuthContext = createContext<{
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  getNews: () => Promise<any[]>;
 }>({
   authState: { isAuthenticated: false, user: null, loading: true },
   signIn: async () => {},
   signUp: async () => {},
   signOut: async () => {},
   signInWithGoogle: async () => {},
+  getNews: async () => [],
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -77,6 +79,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
   };
 
+  const getNews = async () => {
+    const { data, error } = await supabase
+      .from('news')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data || [];
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -85,6 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signUp,
         signOut,
         signInWithGoogle,
+        getNews,
       }}
     >
       {children}
